@@ -9,6 +9,7 @@ import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -43,5 +44,12 @@ class KafkaClassListener {
                 message,
                 partition,
                 offset);
+    }
+
+    @KafkaListener(topics = "reflectoring-others")
+    @SendTo("reflectoring-1")
+    String listenAndReply(String message) {
+        LOG.info("ListenAndReply [{}]", message);
+        return "This is a reply sent after receiving message";
     }
 }
