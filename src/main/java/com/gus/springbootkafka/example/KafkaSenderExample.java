@@ -14,7 +14,8 @@ public class KafkaSenderExample {
 
     Logger LOG = LoggerFactory.getLogger(KafkaSenderExample.class);
 
-
+    @Autowired
+    private KafkaTemplate<String, User> userKafkaTemplate;
     private final KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
@@ -46,4 +47,7 @@ public class KafkaSenderExample {
         });
     }
 
+    void sendCustomMessage(User user, String topicName) {
+        userKafkaTemplate.send(topicName, user);
+    }
 }

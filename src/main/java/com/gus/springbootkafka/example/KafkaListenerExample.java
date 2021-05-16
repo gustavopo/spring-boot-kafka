@@ -23,5 +23,14 @@ public class KafkaListenerExample {
     void commonListenerForMultipleTopics(String message) {
         LOG.info("MultipleTopicListener - {}", message);
     }
+
+    @KafkaListener(
+            topics = "reflectoring-user",
+            groupId="reflectoring-user",
+            containerFactory="userKafkaListenerContainerFactory")
+    void listener(User user) {
+        LOG.info("CustomUserListener [{}]", user);
+    }
 }
+
 
